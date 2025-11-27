@@ -35,7 +35,11 @@
             border: none; 
             cursor: pointer;
         }
-        button:hover {
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        button:hover:enabled {
             background: #003080;
         }
     </style>
@@ -56,19 +60,44 @@
         window.history.go(1);
     }
 
-    // Login function
+    const userInput = document.getElementById("user");
+    const passInput = document.getElementById("pass");
+    const loginBtn = document.querySelector("button");
+
+    // Initially disable the button
+    loginBtn.disabled = true;
+
+    // Enable button only when both fields have text
+    function checkInputs() {
+        if(userInput.value.trim() && passInput.value.trim()) {
+            loginBtn.disabled = false;
+        } else {
+            loginBtn.disabled = true;
+        }
+    }
+
+    userInput.addEventListener("input", checkInputs);
+    passInput.addEventListener("input", checkInputs);
+
+    // Allow Enter key to trigger login
+    [userInput, passInput].forEach(input => {
+        input.addEventListener("keypress", function(e) {
+            if(e.key === "Enter" && !loginBtn.disabled) {
+                login();
+            }
+        });
+    });
+
     function login() {
-        const user = document.getElementById("user").value.trim();
-        const pass = document.getElementById("pass").value.trim();
+        const user = userInput.value.trim();
+        const pass = passInput.value.trim();
 
-        // Example credentials
-        const validUser = "admin";
-        const validPass = "1234";
+        const validUsers = ["campartime@PTTI", "AdminCamPTTI", "CAMTeam@PTII"];
+        const validPass = "123456";
 
-        if(user === validUser && pass === validPass) {
+        if(validUsers.includes(user) && pass === validPass) {
             alert("Login successful!");
-            // Redirect to dashboard or main page
-            window.location.href = "dashboard.html";
+            window.location.href = "Cam 2 mainpage.html"; // Redirect to Cam 2 main page
         } else {
             alert("Invalid User ID or Password");
         }
