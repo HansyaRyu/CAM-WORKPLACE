@@ -3,46 +3,56 @@
 <head>
     <title>CAM WORKPLACE</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #d7eaff; }
-        .box { width: 300px; margin: 100px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
-        h2 { text-align: center; color: #001f54; }
-        input, button { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc; display: block; margin-left:auto; margin-right:auto;}
-        button { background: #001f54; color: white; border: none; cursor: pointer; }
-        button:hover { background: #003080; }
+        body { 
+            font-family: Arial; 
+            background:#d7eaff; /* biru cair */
+        }
+        .box { 
+            width:290px; 
+            margin:100px auto; 
+            background:white; 
+            padding:20px; 
+            border-radius:10px; 
+        }
+        input, button { 
+            width:90%; 
+            padding:10px; 
+            margin:10px 0; 
+        }
+        button { 
+            background:#001f54; /* navy blue */
+            color:white; 
+            border:none; 
+        }
     </style>
 </head>
 <body>
 
 <div class="box">
     <h2>Login</h2>
-    <input id="user" type="text" placeholder="User ID">
-    <input id="pass" type="password" placeholder="Password">
+    <input id="user" type="text" placeholder="User ID" required>
+    <input id="pass" type="password" placeholder="Password" required>
     <button onclick="login()">Login</button>
 </div>
 
 <script>
-    // Prevent going back to main page if already logged out
-    if(localStorage.getItem("isLogin") === "true") {
-        window.location.href = "cam2_mainpage.html";
+function login() {
+    const user = document.getElementById("user").value;
+    const pass = document.getElementById("pass").value;
+
+    const users = {
+        "admincam": "123456",
+        "campartime": "123456"
+    };
+
+    if (users[user] && users[user] === pass) {
+        localStorage.setItem("isLogin", "true");
+        localStorage.setItem("username", user);
+        window.location.href = "Cam 2 mainpage.html";
+    } else {
+        alert("Login error! ID or password.");
     }
-
-    function login() {
-        const user = document.getElementById("user").value.trim();
-        const pass = document.getElementById("pass").value.trim();
-
-        const users = {
-            "admincam": "123456",
-            "campartime": "123456"
-        };
-
-        if(users[user] && users[user] === pass) {
-            localStorage.setItem("isLogin", "true");
-            localStorage.setItem("username", user);
-            window.location.href = "cam2_mainpage.html";
-        } else {
-            alert("Login error! ID or password.");
-        }
-    }
+}
 </script>
 
 </body>
