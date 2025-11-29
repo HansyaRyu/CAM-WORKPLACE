@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CAM WORKPLACE</title>
+    <title>CAM WORKPLACE - Login</title>
     <style>
         body { 
             font-family: Arial; 
@@ -36,15 +36,23 @@
 </div>
 
 <script>
-    // Redirect logged-in users immediately to main page
-    if(localStorage.getItem("isLogin") === "true") {
+    function isLoggedIn() {
+        return localStorage.getItem("isLogin") === "true";
+    }
+
+    // Redirect already logged-in users to main page
+    if(isLoggedIn()) {
         window.location.href = "Cam 2 mainpage.html";
     }
 
-    // Block back button and redirect to index.html if user presses back
+    // Handle Undo / Next (back/forward) in Chrome
     window.history.pushState(null, null, window.location.href);
     window.onpopstate = function () {
-        window.location.href = "index.html"; // Redirect to index.html
+        if(!isLoggedIn()) {
+            // If not logged in, always go to index page
+            window.location.href = "index.html";
+        }
+        // If logged in, do nothing (stay on login page redirect)
     };
 
     function login() {
@@ -57,10 +65,12 @@
         };
 
         if(users[user] && users[user] === pass) {
+            // Successful login
             localStorage.setItem("isLogin", "true");
             localStorage.setItem("username", user);
             window.location.href = "Cam 2 mainpage.html";
         } else {
+            // Failed login - stay on login page normally
             alert("Login error! ID or password.");
         }
     }
