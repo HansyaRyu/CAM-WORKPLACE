@@ -36,15 +36,10 @@
 </div>
 
 <script>
-    // If already logged in → go to main page
-    if(localStorage.getItem("isLogin") === "true") {
-        window.location.replace("Cam 2 mainpage.html");
-    }
 
     // Prevent the undo/back button from leaving this page
     history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
-        // Always return to LOGIN PAGE (index.html)
         window.location.replace("index.html");
     };
 
