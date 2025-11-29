@@ -56,35 +56,45 @@
 
 <script>
     // ===============================================================
-    // REDIRECT TO LOGIN
+    // REDIRECT TO LOGIN IF NOT LOGGED IN
     // ===============================================================
     function goToLogin() {
         window.location.replace("Cam 1 login.html");
     }
 
-    // Check login immediately on page load
-    if (localStorage.getItem("isLogin") !== "true") {
+    function isLoggedIn() {
+        return localStorage.getItem("isLogin") === "true";
+    }
+
+    // If not logged in at all → redirect immediately
+    if(!isLoggedIn()) {
         goToLogin();
     }
 
-    // Handle Undo / reopen tab (persisted cache)
+    // ===============================================================
+    // Undo / reopen tab handling
+    // ===============================================================
     window.onpageshow = function(event) {
-        if (event.persisted && localStorage.getItem("isLogin") !== "true") {
+        // Only redirect if user is NOT logged in
+        if(!isLoggedIn()) {
             goToLogin();
         }
-    };
-
-    // Block back button for non-logged-in users
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        if (localStorage.getItem("isLogin") !== "true") {
-            goToLogin();
-        }
-        // Logged in → do nothing, allow normal workflow
+        // If logged in, do nothing → restore current workflow
     };
 
     // ===============================================================
-    // AUTO LOGOUT AFTER 30 MINUTES
+    // Back button handling
+    // ===============================================================
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        if(!isLoggedIn()) {
+            goToLogin();
+        }
+        // Logged in → allow normal workflow
+    };
+
+    // ===============================================================
+    // AUTO LOGOUT AFTER 30 MINUTES INACTIVITY
     // ===============================================================
     const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 minutes
     let inactivityTimer;
