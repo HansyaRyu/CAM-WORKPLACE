@@ -3,11 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome | CAM WORKPLACE</title>
-    <!-- Prevent browser caching -->
-    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,11 +73,11 @@
         window.location.href = "Cam 1 login.html";
     }
 
-    // Undo / page restore → do not redirect, freeze activity
+    // Undo / page restore → do nothing, just stay on page
     window.onpageshow = function(event) {
         if(event.persisted) {
             console.log("Page restored from cache (Undo) → activity frozen");
-            // Do nothing, user can click button manually
+            // Do nothing, user must click the button
         }
     };
 
