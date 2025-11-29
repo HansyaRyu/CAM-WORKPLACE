@@ -49,20 +49,59 @@
 <button class="btn logout" onclick="logout()">Logout</button>
 
 <script>
-// Block back button from returning after logout
-window.history.forward();
+// ====================================================================
+// STOP CHROME "UNDO" & BACK BUTTON FROM OPENING THIS PAGE
+// ====================================================================
 
-// Check login session
+// Prevent page from being restored from cache (Undo, Back, Reopen Tab)
+window.onpageshow = function(event) {
+    if (event.persisted) {
+        window.location.replace("Cam 1 login.html");
+    }
+};
+
+// Strong back-button block
+history.pushState(null, null, location.href);
+window.onpopstate = function () {
+    history.pushState(null, null, location.href);
+};
+
+// ====================================================================
+// CHECK IF USER IS LOGGED IN
+// ====================================================================
 if (localStorage.getItem("isLogin") !== "true") {
     window.location.replace("Cam 1 login.html");
 }
 
+// ====================================================================
+// AUTO LOGOUT AFTER 30 MINUTES INACTIVITY
+// ====================================================================
+const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 minutes
+let inactivityTimer;
+
+function resetTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(autoLogout, INACTIVITY_LIMIT);
+}
+
+function autoLogout() {
+    alert("Logged out due to 30 minutes of inactivity.");
+    logout();
+}
+
+// Detect activity
+window.onload = resetTimer;
+document.onmousemove = resetTimer;
+document.onkeydown = resetTimer;
+document.onclick = resetTimer;
+document.onscroll = resetTimer;
+
+// ====================================================================
+// LOGOUT FUNCTION
+// ====================================================================
 function logout() {
-    // Remove all session data
     localStorage.clear();
     sessionStorage.clear();
-
-    // Redirect login & block back navigation
     window.location.replace("Cam 1 login.html");
 }
 </script>
