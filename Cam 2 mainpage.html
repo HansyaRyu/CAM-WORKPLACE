@@ -2,6 +2,12 @@
 <html>
 <head>
     <title>Main Page</title>
+
+    <!-- MUST ADD THIS: STOP CHROME FROM RESTORING PAGE FROM CACHE -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <style>
         body { 
             font-family: Arial; 
@@ -50,33 +56,33 @@
 
 <script>
 // ====================================================================
-// STOP CHROME "UNDO" & BACK BUTTON FROM OPENING THIS PAGE
+// STOP CHROME UNDO / CACHE RESTORE
 // ====================================================================
-
-// Prevent page from being restored from cache (Undo, Back, Reopen Tab)
 window.onpageshow = function(event) {
     if (event.persisted) {
         window.location.replace("Cam 1 login.html");
     }
 };
 
-// Strong back-button block
+// ====================================================================
+// BLOCK BACK BUTTON
+// ====================================================================
 history.pushState(null, null, location.href);
 window.onpopstate = function () {
     history.pushState(null, null, location.href);
 };
 
 // ====================================================================
-// CHECK IF USER IS LOGGED IN
+// CHECK LOGIN SESSION
 // ====================================================================
 if (localStorage.getItem("isLogin") !== "true") {
     window.location.replace("Cam 1 login.html");
 }
 
 // ====================================================================
-// AUTO LOGOUT AFTER 30 MINUTES INACTIVITY
+// AUTO LOGOUT AFTER 30 MINUTES
 // ====================================================================
-const INACTIVITY_LIMIT = 30 * 60 * 1000; // 30 minutes
+const INACTIVITY_LIMIT = 30 * 60 * 1000;
 let inactivityTimer;
 
 function resetTimer() {
@@ -97,7 +103,7 @@ document.onclick = resetTimer;
 document.onscroll = resetTimer;
 
 // ====================================================================
-// LOGOUT FUNCTION
+// LOGOUT
 // ====================================================================
 function logout() {
     localStorage.clear();
