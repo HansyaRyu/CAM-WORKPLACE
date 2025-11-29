@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome | CAM WORKPLACE</title>
-    <!-- Prevent browser caching (Undo/back/forward) -->
+    <!-- Prevent browser caching -->
     <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -72,24 +72,12 @@
 </div>
 
 <script>
-    // Force redirect to login page immediately
     function redirectToLogin() {
         window.location.replace("Cam 1 login.html");
     }
 
-    // Trigger redirect on any page load, including Undo/Next
-    window.onload = redirectToLogin;
+    // Detect if the page is restored from cache (Undo/freeze)
     window.onpageshow = function(event) {
-        // Handles Chrome's "Undo/forward" (persisted pages)
-        redirectToLogin();
-    };
-
-    // Prevent back/forward navigation
-    history.pushState(null, "", window.location.href);
-    window.onpopstate = function() {
-        redirectToLogin();
-    };
-</script>
-
-</body>
-</html>
+        if(event.persisted) {
+            // Page restored from Undo → freeze current activity
+            console.log("Page restored from cache (Undo) → activity frozen
