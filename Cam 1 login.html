@@ -38,7 +38,7 @@ function login(){
    const users = {
     "admincam": "123456",
     "campartime": "123456",
-    "ptti": "ptti100juta"   // Added PTTI management
+    "pttimanagement": "ptti100juta"   // Added PTTI management
 };
 
 if (users[user] && users[user] === pass) {
@@ -47,8 +47,8 @@ if (users[user] && users[user] === pass) {
     localStorage.setItem("username", user);
 
     // Redirect based on user
-    if (user === "ptti") {
-        window.location.href = "masterlist.html";    // Redirect for PTTI
+    if (user === "pttimanagement") {
+        window.location.href = "Cam 3 masterlist.html";    // Redirect for PTTI
     } else {
         window.location.href = "Cam 2 mainpage.html"; // Other users
     }
@@ -59,4 +59,5 @@ if (users[user] && users[user] === pass) {
 </script>
 </body>
 </html>
+
 
