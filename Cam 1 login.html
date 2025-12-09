@@ -35,16 +35,28 @@ function login(){
     const user=document.getElementById("user").value.trim();
     const pass=document.getElementById("pass").value.trim();
 
-    const users={"admincam":"123456","campartime":"123456"};
+   const users = {
+    "admincam": "123456",
+    "campartime": "123456",
+    "ptti": "ptti100juta"   // Added PTTI management
+};
 
-    if(users[user] && users[user]===pass){
-        localStorage.setItem("isLogin","true");
-        localStorage.setItem("username",user);
-        window.location.href="Cam 2 mainpage.html";
+if (users[user] && users[user] === pass) {
+
+    localStorage.setItem("isLogin", "true");
+    localStorage.setItem("username", user);
+
+    // Redirect based on user
+    if (user === "ptti") {
+        window.location.href = "masterlist.html";    // Redirect for PTTI
     } else {
-        alert("Login error! ID or password.");
+        window.location.href = "Cam 2 mainpage.html"; // Other users
     }
+
+} else {
+    alert("Login error! ID or password.");
 }
 </script>
 </body>
 </html>
+
