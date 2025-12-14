@@ -1,59 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>MasterList</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #d7eaff; 
-            text-align: center; 
-            padding-top: 80px;
-        }
+<meta charset="UTF-8">
+<title>MasterList</title>
 
-        h2 {
-            font-size: 28px;
-            color: #001f54;
-            margin-bottom: 40px;
-        }
+<style>
+    body { 
+        font-family: Arial, sans-serif; 
+        background: #d7eaff; 
+        text-align: center; 
+        padding-top: 80px;
+    }
 
-        .btn {
-            display: block;
-            width: 220px;
-            margin: 15px auto;
-            padding: 15px 25px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 10px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-            transition: 0.25s;
-        }
+    h2 {
+        font-size: 28px;
+        color: #001f54;
+        margin-bottom: 40px;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-        }
+    .btn {
+        display: block;
+        width: 220px;
+        margin: 15px auto;
+        padding: 15px 25px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+        transition: 0.25s;
+        cursor: pointer;
+    }
 
-        .btn-nude {
-            background: #f5d7b6;
-            color: #001f54;
-        }
+    .btn:hover {
+        transform: scale(1.05);
+    }
 
-        .btn-back {
-            background: #001f54;
-            color: white;
-        }
-    </style>
+    .btn-nude {
+        background: #f5d7b6;
+        color: #001f54;
+    }
+
+    .btn-back {
+        background: #001f54;
+        color: white;
+    }
+</style>
 </head>
+
 <body>
 
 <h2>Masterlist Page</h2>
 
-<a class="btn btn-nude" href="https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw" target="_blank">2025</a>
-<a class="btn btn-nude" href="https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw" target="_blank">2024</a>
-<a class="btn btn-nude" href="https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw" target="_blank">2023</a>
-<a class="btn btn-nude" href="https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw" target="_blank">2022</a>
+<!-- Year buttons (Drive Folder Popup) -->
+<a class="btn btn-nude" onclick="openDrivePopup('https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw')">2025</a>
+<a class="btn btn-nude" onclick="openDrivePopup('https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw')">2024</a>
+<a class="btn btn-nude" onclick="openDrivePopup('https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw')">2023</a>
+<a class="btn btn-nude" onclick="openDrivePopup('https://drive.google.com/drive/folders/1oQXTdI0oXlMd1GVK-TZmUulXMr2Ny_Gw')">2022</a>
 
-<a class="btn btn-back" href="Cam 2 mainpage.html">⬅ Back to Main</a>
+<!-- Back button -->
+<a class="btn btn-back" href="Cam 2 mainpage.html" onclick="closeDrivePopup()">⬅ Back to Main</a>
+
+<script>
+let drivePopup = null;
+
+function openDrivePopup(url) {
+
+    // Tutup popup lama jika masih terbuka
+    if (drivePopup && !drivePopup.closed) {
+        drivePopup.close();
+    }
+
+    const screenWidth  = window.screen.width;
+    const screenHeight = window.screen.height;
+
+    const popupWidth  = Math.floor(screenWidth * 0.85);
+    const popupHeight = Math.floor(screenHeight * 0.85);
+
+    const left = Math.floor((screenWidth - popupWidth) / 2);
+    const top  = Math.floor((screenHeight - popupHeight) / 2);
+
+    drivePopup = window.open(
+        url,
+        'CAM_GoogleDrive',
+        `
+        width=${popupWidth},
+        height=${popupHeight},
+        top=${top},
+        left=${left},
+        toolbar=no,
+        menubar=no,
+        location=no,
+        status=no,
+        scrollbars=yes,
+        resizable=yes
+        `
+    );
+}
+
+function closeDrivePopup() {
+    if (drivePopup && !drivePopup.closed) {
+        drivePopup.close();
+    }
+}
+</script>
 
 </body>
 </html>
